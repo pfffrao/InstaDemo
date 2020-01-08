@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+{% load static %}
+
+{% if request.user.is_authenticated %}
+    <h3>Hi, {{ request.user.username }}</h3>
+    <h3> or 
+    <a href={% url 'logout' %}>Logout</a></h3>
+{% else %}
+    <h3>Hi, please 
+    <a href={% url 'login' %}>Login</a> </h3>
+    <h3> or 
+    <a href={% url 'signup' %}>Signup</a></h3>
+{% endif %}
+
+<a href="{% url 'make_post' %}">Make Post</a>
+
+<div>
+    {% if object_list %}
+        {% for post in object_list %}
+            <p>Printing images:</p>
+            <a href="{% url 'post_detail' post.id %}">
+                <img src="/{{post.image}}"/>
+            </a>
+        {% endfor %}
+    {% else %}
+        <h1>There is no posts.</h1>
+    {% endif %}
+</div>
