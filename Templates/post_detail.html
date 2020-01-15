@@ -1,7 +1,38 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row single-post">
+    <div class="single-post-card view-update {{ object.pk }}">
+        <div class="header">
+            <a href="{% url 'profile' object.author.pk %}">
+                {% if object.author.profile_pic %}
+                    <img class="picture-circle--medium" src="/{{object.author.profile_pic.url}}">
+                {% endif %}
+                Uploader: {{object.author.username}}
+            </a>
+        </div>
+        <div class="image__wrapper">
+            <img class="card__main-image" src="/{{object.image.url}}">
+        </div>
+        <div class="comments-portion">
+            <div class="likes-timestamp-row">
+                <div class="likes">
+                    {% if object.get_like_count %}
+                        {{ object.get_like_count }} like{% if object.get_like_count > 1 %}s{% endif %}
+                    {% endif %}
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>
+
+<h3>You can now </h3>
 <div>
     <a href="{% url 'update_post' object.id %}">Update Post</a>
-    <a href={% url 'delete_post' object.id%}>Delete Post</a>
+
+<h3> or </h3>
+
+    <a href="{% url 'delete_post' object.id%}">Delete Post</a>
 </div>
-<p> {{ object.title}} </p>
-<img src = "/{{ object.image }}">
+
+{% endblock content %}

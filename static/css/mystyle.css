@@ -1,0 +1,11 @@
+li {
+    color: beige;
+}
+li a{
+    color: cadetblue;
+}
+.createPost {
+    color: darkseagreen;
+    font-size: 25px;
+    position: relative;
+}

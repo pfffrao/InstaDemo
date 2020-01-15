@@ -1,28 +1,46 @@
-<!DOCTYPE html>
-{% load static %}
+{% extends 'base.html' %}
 
-{% if request.user.is_authenticated %}
-    <h3>Hi, {{ request.user.username }}</h3>
-    <h3> or 
-    <a href={% url 'logout' %}>Logout</a></h3>
-{% else %}
-    <h3>Hi, please 
-    <a href={% url 'login' %}>Login</a> </h3>
-    <h3> or 
-    <a href={% url 'signup' %}>Signup</a></h3>
-{% endif %}
+{% load custom_tags %}
 
-<a href="{% url 'make_post' %}">Make Post</a>
-
-<div>
-    {% if object_list %}
-        {% for post in object_list %}
-            <p>Printing images:</p>
-            <a href="{% url 'post_detail' post.id %}">
-                <img src="/{{post.image}}"/>
+{% block content %}
+    <div class="cards-listing">
+    {% for post in object_list|post_filter:request.user %}
+    <div class="row">
+        <div class="card view-update {{ post.pk }}">
+            <div class="card__panel-head">
+                <div class="poster__info">
+                    <a href="{% url 'helloworld'%}" class="poster__name">
+                        {% if post.author.profile_pic %}
+                            <img src="{{ post.author.profile_pic.url}}" class="poster__profilepic">
+                        {% endif %}
+                        {{ post.author.username }}
+                    </a>
+                    {% comment %}<span class="poster__timestamp">
+                        {{ post.posted_on|timesince}}
+                    </span>{% endcomment %}
+                </div>
+            </div>
+            <a href="{% url 'post_detail' post.pk %}">
+                <img class="card__main-image" src="/{{ post.image.url }}"/>
             </a>
-        {% endfor %}
-    {% else %}
-        <h1>There is no posts.</h1>
-    {% endif %}
-</div>
+            <div class="card__panel-body">
+                <div class="likes">
+                    {% if post.get_like_count %}
+                        {{ post.get_like_count }} like{% if post.get_like_count > 1 %}s{% endif %}
+                    {% else %}
+                        0 like
+                    {% endif %}
+                </div>
+                <section class="input-row">
+                    <i class="fa {% has_user_liked_post post request.user %} submit-like" aria-hidden="true"></i>
+                    <div class="hidden-data {{ post.pk }}" style="display: none;">
+                        <span class="post-pk">{{ post.pk }}</span>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div> 
+    {% endfor %}
+    </div>
+
+{% endblock content %}

@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+
+{% block content %}
+<div class="profile">
+    <div class="profile__head">
+        <div class="row">
+            <div class="col-xs-4 left">
+                {% if object.profile_pic %}
+                    <img class="picture-square content" src="/{{ object.profile_pic.url }}"/>
+                {% else %}
+                    <i class="fa fa-user" aria-hidden="true"></i>
+                {% endif %}
+            </div>
+            <div class="col-xs-8 right">
+                    <div class="name-buttons">
+                        <h1>{{ object.username }}</h1>
+                    </div class="name-buttons">
+                    <div>uid: {{ object.pk }}</div>
+                    <div>email: {{ object.email }}</div>
+                    <div>
+                        <ul class="stats">
+                            <div class="col-xs-4"><li class="stats__count"><span>{{object.my_posts.count}}</span><br>posts</li></div>
+    
+                            <div class="col-xs-4"><a href="/" style="text-decoration: none; color: black;"><li class="stats_count"><span class="follower__count" id="follower_id">{{ object.get_followers.count}}</span><br>followers</li></a></div>
+    
+                            <div class="col-xs-4"><a href="/" style="text-decoration: none;color: black;"><li class="following__count"><span>{{ object.get_following.count }}</span><br>following</li></a></div>
+                        </ul>
+                    </div>
+                {% if user == object %}
+                    <a class="edit-desktop" href="{% url 'helloworld' %}">
+                        <button class="edit-profile">Edit Profile</button>
+                    </a>
+                {% else %}
+                    <div class="profile follow-toggle__container ">
+                        <div>
+                            {% is_following request.user object as following %}
+                            {% if following %}
+                            You are now following {{ object.username}}
+                            {% else %}
+                            You are not following {{
+                                object.username
+                            }}
+                            {% endif %}
+                        </div>
+                        {% if request.user|checkFollow:object %}
+                            <button class="btn btn-primary unfollow-user">UnFollow</button>
+                        {% else %}
+                            <button class="btn btn-primary follow-user">Follow</button>
+                        {% endif %}
+                    </div>
+                {% endif %}
+                
+                </div>
+            </div>        
+        </div>
+    </div>
+    <h2>User Posts:</h2>
+    <div class="profile__body">
+        <div class="row">
+            {% for post in object.my_posts.all %}
+            <div class="col-xs-4">
+                <div class="picture-square" style="background-image: url(http://{{ request.META.HTTP_HOST }}/{{ post.image.url }}); background-size:contain;">
+                <a href="{% url 'post_detail' post.pk %}">
+                    <div class="content">
+                        <i class="fa fa-heart" aria-hidden="true"> {{post.get_like_count}}</i>
+                        <i class="fa fa-comment" aria-hidden="true"> 0</i>
+                    </div>
+                </a>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
