@@ -134,3 +134,7 @@ LOGOUT_REDIRECT_URL = 'post'
 AUTH_USER_MODEL = 'Insta.InstaUser'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+if 'DATABASE_URL' in os.environ:
+    import dj_database_url
+    DATABASES = {'default':dj_database_url.config()}
