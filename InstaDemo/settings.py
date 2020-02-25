@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import dj_database_url
+import django_heroku
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -86,8 +87,10 @@ DATABASES = {
     }
 }
 
-# deployment
-DATABASES = {'default': dj_database_url.config()}
+CONN_MAX_AGE = 10  # maximum 10 time each connection to the database
+
+# deployment, remain commented when developing
+# DATABASES = {'default': dj_database_url.config()}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -138,3 +141,6 @@ LOGOUT_REDIRECT_URL = 'post'
 AUTH_USER_MODEL = 'Insta.InstaUser'
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# for heroku
+django_heroku.settings(locals())

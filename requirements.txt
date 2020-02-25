@@ -2,6 +2,7 @@ django
 pillow
 django-imagekit
 django-annoying
+django-heroku
 gunicorn
 whitenoise
 dj-database-url
