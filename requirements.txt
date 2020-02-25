@@ -1,2 +1,8 @@
+django
+pillow
+django-imagekit
+django-annoying
+gunicorn
+whitenoise
 dj-database-url
 psycopg2

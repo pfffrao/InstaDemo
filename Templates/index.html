@@ -4,7 +4,7 @@
 
 {% block content %}
     <div class="cards-listing">
-    {% for post in object_list|post_filter:request.user %}
+    {% for post in object_list %}
     <div class="row">
         <div class="card view-update {{ post.pk }}">
             <div class="card__panel-head">
