@@ -144,3 +144,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # for heroku
 django_heroku.settings(locals())
+
+# Message Queues
+CELERY_BROKER_URL = 'amqp://localhost'
+

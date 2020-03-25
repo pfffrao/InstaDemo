@@ -1,31 +1,59 @@
 {% extends 'base.html' %}
+
+{% load custom_tags %}
+
 {% block content %}
 
 <div class="row single-post">
     <div class="single-post-card view-update {{ object.pk }}">
-        <div class="header">
-            <a href="{% url 'profile' object.author.pk %}">
-                {% if object.author.profile_pic %}
-                    <img class="picture-circle--medium" src="/{{object.author.profile_pic.url}}">
-                {% endif %}
-                Uploader: {{object.author.username}}
-            </a>
-        </div>
-        <div class="image__wrapper">
-            <img class="card__main-image" src="/{{object.image.url}}">
-        </div>
-        <div class="comments-portion">
+        <div class="card__panel-head">
+            <div class="poster__name">
+                Title: {{object.title}}
+            </div>
+            <div class="header">
+                <div>
+                    <a href="{% url 'profile' object.author.pk %}">
+                        {% if object.author.profile_pic %}
+                            <img class="picture-circle--medium" src="/{{object.author.profile_pic.url}}">
+                        {% endif %}
+                        <div class="poster__name">
+                            Uploader: {{object.author.username}}
+                        </div>
+                        <span class="poster__timestamp">
+                            {{ post.posted_on|timesince}} ago.
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class="comments-portion">
+                    <div class="comment-list">
+                        Comment
+                    </div>
+                    <div class="comment-list__comment">
+                        a comment:
+                    </div>
+                </div>
             <div class="likes-timestamp-row">
+                <i class="fa {% has_user_liked_post post request.user %} submit-like" aria-hidden="true"></i>
+                <div class="hidden-data {{ post.pk }}" style="display: none;">
+                    <span class="post-pk">{{ post.pk }}</span>
+                </div>
                 <div class="likes">
                     {% if object.get_like_count %}
                         {{ object.get_like_count }} like{% if object.get_like_count > 1 %}s{% endif %}
                     {% endif %}
-                </div>                
+                </div>
+            </div>
+            
+        </div>
+        <div class="card__panel-body">
+            <div class="image__wrapper">
+                <img class="card__main-image" src="/{{object.image.url}}">
             </div>
         </div>
     </div>
 </div>
-
+{% if object.author.username == request.user %}
 <h3>You can now </h3>
 <div>
     <a href="{% url 'update_post' object.id %}">Update Post</a>
@@ -34,5 +62,5 @@
 
     <a href="{% url 'delete_post' object.id%}">Delete Post</a>
 </div>
-
+{% endif %}
 {% endblock content %}

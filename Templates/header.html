@@ -31,6 +31,18 @@
                     </li>
                 {% endif %}
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if request.user.is_authenticated %}
+                    <div></div>
+                    <div style="font-family:sans-serif;font-size:16px;font-style;">
+                        Hi, {{ request.user.username }}!
+                    </div>
+                {% else %}
+                    <div style="font-family:sans-serif;font-size:16px;font-style;">
+                        Hi, be my guest! or login/register on the left!
+                    </div>
+                {% endif %}
+            </ul>
         </div>
     </div>
 </nav>

@@ -16,8 +16,11 @@
                     <div class="name-buttons">
                         <h1>{{ object.username }}</h1>
                     </div class="name-buttons">
-                    <div>uid: {{ object.pk }}</div>
-                    <div>email: {{ object.email }}</div>
+                    uid: {{ object.pk }}
+                    {% comment %} <div>email: {{ object.email }}</div> {% endcomment %}
+                    <div style="fonts">
+                    Statistics:
+                    </div>
                     <div>
                         <ul class="stats">
                             <div class="col-xs-4"><li class="stats__count"><span>{{object.my_posts.count}}</span><br>posts</li></div>
@@ -32,19 +35,20 @@
                         <button class="edit-profile">Edit Profile</button>
                     </a>
                 {% else %}
-                    <div class="profile follow-toggle__container ">
-                        <div>
-                            {% is_following request.user object as following %}
+                    <div class="profile follow-toggle__container">
+                        <div class="hidden-data {{ object.pk }}" style="display: none;">
+                            <span class="user-pk">{{ object.pk }}</span>
+                        </div>
+                        {% is_following request.user object as following %}
+                        <div class="following-display">
                             {% if following %}
-                            You are now following {{ object.username}}
+                                <span class="following-text">You are now following {{ object.username }}.</span>
                             {% else %}
-                            You are not following {{
-                                object.username
-                            }}
+                                <span class="unfollowed-text">You are not following {{ object.username }}. </span>
                             {% endif %}
                         </div>
-                        {% if request.user|checkFollow:object %}
-                            <button class="btn btn-primary unfollow-user">UnFollow</button>
+                        {% if following %}
+                            <button class="btn btn-primary unfollow-user">Unfollow</button>
                         {% else %}
                             <button class="btn btn-primary follow-user">Follow</button>
                         {% endif %}

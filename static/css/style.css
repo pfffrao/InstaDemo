@@ -247,13 +247,13 @@ a:hover {
   margin: 20px auto; }
 
 .card {
-  background-color: #fff;
+  background-color: rgb(220, 246, 250);
   margin-bottom: 50px;
   border: 1px solid #efefef;
   border-radius: 3px; }
   .card__panel-head {
-    background: #fff;
-    background-color: #fff;
+    background:  rgb(220, 246, 250);
+    background-color: rgb(220, 246, 250);
     padding: 14px 20px 15px; }
     .card__panel-head .poster__profilepic {
       border-radius: 100%;
@@ -354,7 +354,7 @@ a:hover {
   padding-right: 335px;
   width: 100%;
   position: relative;
-  background-color: #fff; }
+  background-color: rgb(220, 246, 250);; }
   .single-post-card .header, .single-post-card .comments-portion {
     display: flex;
     flex-shrink: 0; }

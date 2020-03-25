@@ -29,7 +29,7 @@ function like_update_view(data) {
     console.log(data);
 
     // toggle heart
-    var $hiddenData = $('.hidden-data.' + data.post_pk);
+    var $hiddenData = $('.like-hidden-data.' + data.post_pk);
     if (data.result != 0) {
       $hiddenData.siblings('.submit-like').removeClass('fa-heart-o').addClass('fa-heart');
     }else if(data.result == -1){
@@ -123,73 +123,138 @@ function comment_update_view(data) {
  *
  */
 
-function follow_user(success_cb, error_cb, type) {
-    var follow_user_pk = $(this).attr('id');
-    console.log(follow_user_pk);
+// function follow_user(success_cb, error_cb, type) {
+//     var follow_user_pk = $(this).attr('id');
+//     console.log(follow_user_pk);
   
-    $.ajax({
-      method: "POST",
-      url: '/togglefollow',
-      data: {
-        follow_user_pk: follow_user_pk,
-        type: type
-      },
-      success: function(data) { success_cb(data); },
-      error: function(error) { error_cb(error); }
-    });
-}
+//     $.ajax({
+//       method: "POST",
+//       url: '/togglefollow',
+//       data: {
+//         'follow_user_pk': follow_user_pk,
+//         'type': type
+//       },
+//       success: function(data) { success_cb(data); },
+//       error: function(error) { error_cb(error); }
+//     });
+// }
   
-function update_follow_view(data) {
-    if (data.result == -1){
-      console.log('Please login');
-    }
-    console.log('calling update_follow_view');
-    console.log('data',data);
-    var $button = $('.follow-toggle__container .btn');
-    $button.addClass('unfollow-user').removeClass('follow-user');
-    $button.text('Unfollow');
+// function update_follow_view(data) {
+//     if (data.result == -1){
+//       console.log('Please login');
+//     }
+//     console.log('calling update_follow_view');
+//     console.log('data',data);
+//     var $button = $('.follow-toggle__container .btn');
+//     $button.addClass('unfollow-user').removeClass('follow-user');
+//     $button.text('Unfollow');
 
-    var $span = $('.follower_count');
-    var span_text = parseInt(document.getElementById("follower_id").innerText);
-    $span.text(span_text + 1);
-}
+//     var $span = $('.follower_count');
+//     var span_text = parseInt(document.getElementById("follower_id").innerText);
+//     $span.text(span_text + 1);
+// }
 
-function update_unfollow_view(data) {
-    console.log('calling update_unfollow_view');
-    console.log('data',data);
-    var $button = $('.follow-toggle__container .btn');
-    $button.addClass('follow-user').removeClass('unfollow-user');
-    $button.text('Follow');
+// function update_unfollow_view(data) {
+//     console.log('calling update_unfollow_view');
+//     console.log('data',data);
+//     var $button = $('.follow-toggle__container .btn');
+//     $button.addClass('follow-user').removeClass('unfollow-user');
+//     $button.text('Follow');
 
-    var $span = $('.follower_count');
-    var span_text = parseInt(document.getElementById("follower_id").innerText);
-    $span.text(span_text - 1);
-}
+//     var $span = $('.follower_count');
+//     var span_text = parseInt(document.getElementById("follower_id").innerText);
+//     $span.text(span_text - 1);
+// }
 
 
-$('.follow-toggle__container').on('click', '.follow-user', function() {
-    follow_user.call(this, update_follow_view, error_cb, 'follow');
-});
+// $('.follow-toggle__container').on('click', '.follow-user', function() {
+//     follow_user.call(this, update_follow_view, error_cb, 'follow');
+// });
 
-$('.follow-toggle__container').on('click', '.unfollow-user', function() {
-    follow_user.call(this, update_unfollow_view, error_cb, 'unfollow');
-});
+// $('.follow-toggle__container').on('click', '.unfollow-user', function() {
+//     follow_user.call(this, update_unfollow_view, error_cb, 'unfollow');
+// });
 
 // ======================
 // my own follow function
 // ======================
-// function error_logger(error){
-//   console.log(error);
-// }
+function createFollow(success_cb, error_cb, type){
+  var $userpk = parseInt($('div.follow-toggle__container').find('.user-pk').text())
+  $.ajax({
+    type:'POST',
+    url:'follow',
+    data:{
+      'followed_pk': $userpk,
+      type:type
+    },
+    success: function (data){success_cb(data);},
+    error:  function (data){error_cb(data);},
 
-// function follow_ops(success_cb, error_cb, type){
-//   $.ajax()
-// }
+  })
+}
 
-// $(".follow-user").on('click', function(){
-//   follow_ops.call(this, follow_ops_success, error_logger, 'follow')
-// });
+var followingMsgClassName = "following-text";
+var unfollowedMsgClassName = "unfollowed-text";
 
-// $(".unfollow-user").on('click', function(){
-//   follow_ops.call(this, follow_ops_success, error_logger, 'unfollow')
-// })
+function toggleFollowView(data){
+  // update follow text, show is following
+  if(data.result == -1){
+    console.log('Please login.');
+    return;
+  }
+  // console.log('Toggling follow view...');
+  var $followText = $('.unfollowed-text');
+  // console.log($followText.html());
+  var theText = $followText.html();
+  theText = theText.replace(/not/g, "now");
+  $followText.html(theText);
+  $followText.addClass(followingMsgClassName).removeClass(unfollowedMsgClassName);
+
+  // update follower button
+  var $followBtn = $('.follow-user');
+  $followBtn.addClass('unfollow-user').removeClass('follow-user');
+  $followBtn.text('Unfollow');
+  // update profile follower count
+  var $followerCnt = $('span.follower__count');
+  var spanNum = parseInt($followerCnt.text());
+  // console.log(spanNum);
+
+  $followerCnt.text(spanNum + 1);
+
+  // console.log('follow view complete');
+}
+
+function toggleUnfollowView(data){
+  // update follow text, show is not following
+  if(data.result == -1){
+    console.log('Please login.');
+  }
+  // console.log('Toggling follow view...');
+  var $followText = $('.following-text');
+  // console.log($followText.html());
+  var theText = $followText.html();
+  theText = theText.replace(/now/g, "not");
+  // theText.replace('now', 'not');
+  $followText.text(theText);
+  $followText.addClass(unfollowedMsgClassName).removeClass(followingMsgClassName);
+
+  // update follower button
+  var $followBtn = $('.unfollow-user');
+  // console.log($followBtn);
+  $followBtn.addClass('follow-user').removeClass('unfollow-user');
+  $followBtn.text('Follow');
+
+  // update profile follower count
+  var $followerCnt = $('span.follower__count');
+  var spanNum = parseInt($followerCnt.text());
+  
+  // console.log(spanNum);
+
+  $followerCnt.text(spanNum - 1);
+  
+  // console.log('Unfollow view complete');
+}
+
+$('.follow-toggle__container').on('click', '.follow-user' ,function(){createFollow.call(this, toggleFollowView, error_cb, 'follow')});
+
+$('.follow-toggle__container').on('click','.unfollow-user', function(){createFollow.call(this, toggleUnfollowView, error_cb, 'unfollow')})

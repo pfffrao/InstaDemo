@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from Insta.views import SignUp, UserProfile
+from Insta.views import SignUp, UserProfile, addFollow
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -23,7 +23,7 @@ urlpatterns = [
     path('auth/', include('django.contrib.auth.urls')),
     path('auth/signup', SignUp.as_view(), name='signup'),
     path('profile/<int:pk>/', UserProfile.as_view(), name='profile'),
-    path('profile/<int:pk>/follow', UserProfile.as_view(), name='follow')
+    path('profile/<int:pk>/follow', addFollow, name='follow')
     # TODO:
     # comment
 ]

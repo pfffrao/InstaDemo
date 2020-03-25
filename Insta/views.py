@@ -2,7 +2,7 @@ from annoying.decorators import ajax_request
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
-from Insta.models import Post, InstaUser, Like, Follow
+from Insta.models import Post, InstaUser, Like, Follow, Comment
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from Insta.forms import CustomUserCreationForm
@@ -27,7 +27,7 @@ class PostDetailView(DetailView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'post_create.html'
-    fields = '__all__'
+    fields = ['title', 'image']
     login_url = 'login'
 
 
@@ -54,6 +54,14 @@ class UserProfile(DetailView):
     template_name = 'user_detail.html'
 
 
+class CommentCreateView(LoginRequiredMixin, CreateView):
+    model = Comment
+    fields = ['comments']
+    success_url = 'post'
+    login_url = 'login'
+    template_name = 'comment_create.html'
+    
+
 @ajax_request
 def addLike(request):
     if not request.user.is_authenticated:
@@ -75,3 +83,39 @@ def addLike(request):
         'post_pk': post_pk
     }
 
+@ajax_request
+def addFollow(request,pk):
+    print("Now in addFollow function") 
+    # print("Request is")
+    # print(request)
+    # print("pk is")
+    # print(pk)
+    if not request.user.is_authenticated:
+        return {
+            'result': -1
+        }
+    thePk = None
+    followType = None
+    if(request.method == 'POST'):
+        thePk = request.POST.get('followed_pk')
+        followType = request.POST.get('type')
+    if thePk is None or followType is None:
+        return {
+            'result': -2
+        }
+    try:
+        follow = Follow(follower=request.user, followed=InstaUser.objects.get(pk=thePk))
+        follow.save()
+        print("New follow object saved!")
+        result = 1
+    except Exception as e:
+        follow = Follow.objects.get(follower=request.user, followed=InstaUser.objects.get(pk=thePk))
+        follow.delete()
+        print("Follow object deleted!")
+        result = 0
+    return {
+        'result': result,
+        'followed_pk': thePk
+    }
+
+    
