@@ -16,6 +16,7 @@ class HelloWorld(TemplateView):
 
 class PostsView(ListView):
     model = Post
+    queryset = Post.objects.order_by('-posted_on')
     template_name = 'index.html'
 
 
@@ -29,6 +30,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     template_name = 'post_create.html'
     fields = ['title', 'image']
     login_url = 'login'
+    success_url = reverse_lazy('post')
 
     def form_valid(self, form):
         user = self.request.user

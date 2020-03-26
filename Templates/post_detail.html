@@ -53,7 +53,7 @@
         </div>
     </div>
 </div>
-{% if object.author.username == request.user %}
+{% if object.author == request.user %}
 <h3>You can now </h3>
 <div>
     <a href="{% url 'update_post' object.id %}">Update Post</a>
