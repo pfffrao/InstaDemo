@@ -11,14 +11,14 @@ function error_cb(error) {
  */
 
 function create_like(success_cb, error_cb) {
-    var post_pk = $(this).siblings('.hidden-data').find('.post-pk').text();
+    var post_pk = parseInt($(this).siblings('.like-hidden-data').find('.post-pk').html());
     console.log(post_pk);
 
     $.ajax({
         type: "POST",
         url: '/insta/like',
         data: {
-            post_id: post_pk
+            'post_id': post_pk
         },
         success: function(data) { success_cb(data); },
         error: function(error) { error_cb(error); }

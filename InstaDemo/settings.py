@@ -82,16 +82,18 @@ WSGI_APPLICATION = 'InstaDemo.wsgi.application'
 # dev
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'db8bqi6daj72j3',
+        'HOST': 'ec2-3-224-165-85.compute-1.amazonaws.com',
+        'PORT': '5432',
+        'USER': 'ufcljbmabuwuef',
+        'PASSWORD': '7f91aabb37e1936628145469a85ccec904b58113be60c5e5ed3715337f9effde',
     }
 }
 
-CONN_MAX_AGE = 10  # maximum 10 time each connection to the database
+CONN_MAX_AGE = 2  # maximum 10 time each connection to the database
 
 # deployment, remain commented when developing
-# DATABASES = {'default': dj_database_url.config()}
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
