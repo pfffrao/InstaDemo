@@ -157,8 +157,8 @@ django_heroku.settings(locals())
 STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 AWS_S3_REGION_NAME = 'us-west-1'
-AWS_ACCESS_KEY_ID = 'AKIAVMIBQ6USYMI2A5PM'
-AWS_SECRET_ACCESS_KEY='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'
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
 s3 = boto3.resource('s3')
 
 AWS_STORAGE_BUCKET_NAME = 'instademobucket'
