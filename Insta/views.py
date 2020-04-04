@@ -3,10 +3,10 @@ from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from Insta.models import Post, InstaUser, Like, Follow, Comment
-
 from django.contrib.auth.mixins import LoginRequiredMixin
-from Insta.forms import CustomUserCreationForm
+from Insta.forms import CustomUserCreationForm, CustomPostCreationForm, CustomPostUpdateForm
 # from django.contrib.auth.forms import UserCreationForm
+from django import forms
 
 
 # Create your views here.
@@ -28,20 +28,27 @@ class PostDetailView(DetailView):
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     template_name = 'post_create.html'
-    fields = ['title', 'image']
     login_url = 'login'
     success_url = reverse_lazy('post')
-
+    form_class = CustomPostCreationForm
+    
     def form_valid(self, form):
         user = self.request.user
         form.instance.author_id = user.pk
         return super(PostCreateView, self).form_valid(form)
 
 
-class PostUpdateView(UpdateView):
+class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
     template_name = 'post_update.html'
-    fields = ['title']
+    # fields = ['title', 'image']
+    form_class = CustomPostUpdateForm
+    login_url = 'login'
+    success_url = reverse_lazy('post')
+
+    def form_valid(self, form):
+        form.instance.author_id = self.request.user.pk
+        return super(PostUpdateView, self).form_valid(form)
 
 
 class PostDeleteView(DeleteView):

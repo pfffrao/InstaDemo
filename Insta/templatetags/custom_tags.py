@@ -1,6 +1,8 @@
 from django import template
 # from django.urls import NoReverseMatch, reverse
 from Insta.models import Like, Follow
+from InstaDemo.settings import STATICFILES_DIRS
+import os
 
 
 register = template.Library()
@@ -58,3 +60,9 @@ def post_filter(post_list, user):
 
 
 register.filter('post_filter', post_filter)
+
+@register.simple_tag
+def get_local_assets(static_path):
+    path_prefix = STATICFILES_DIRS[0]
+    print("path_prefix:" + path_prefix)
+    return os.path.join(path_prefix, static_path)

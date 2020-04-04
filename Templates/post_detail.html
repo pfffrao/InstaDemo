@@ -26,17 +26,19 @@
                 </div>
             </div>
             <div class="comments-portion">
-                    <div class="comment-list">
-                        Comment
-                    </div>
-                    <div class="comment-list__comment">
-                        a comment:
-                    </div>
+                <div class="comment-list">
+                    Comment
                 </div>
+                <div class="comment-list__comment">
+                    a comment:
+                </div>
+            </div>
             <div class="likes-timestamp-row">
-                <i class="fa {% has_user_liked_post post request.user %} submit-like" aria-hidden="true"></i>
-                <div class="hidden-data {{ post.pk }}" style="display: none;">
-                    <span class="post-pk">{{ post.pk }}</span>
+                <div class="input-row>">
+                    <i class="fa {% has_user_liked_post post request.user %} submit-like" aria-hidden="true"></i>
+                    <div class="like-hidden-data {{ post.pk }}" style="display: none;">
+                        <span class="post-pk">{{ post.pk }}</span>
+                    </div>
                 </div>
                 <div class="likes">
                     {% if object.get_like_count %}
@@ -48,7 +50,7 @@
         </div>
         <div class="card__panel-body">
             <div class="image__wrapper">
-                <img class="card__main-image" src="/{{object.image.url}}">
+                <img class="card__main-image" src="{{ post.image.url }}"/>
             </div>
         </div>
     </div>

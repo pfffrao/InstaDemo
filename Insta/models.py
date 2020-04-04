@@ -36,7 +36,7 @@ class InstaUser(AbstractUser):
 class Post(models.Model):
     title = models.TextField(blank=True, null=True)
     image = ProcessedImageField(
-        upload_to='static/images/posts',
+        upload_to='images/posts',
         format='JPEG',
         options={'quality': 90},
         blank=True,
