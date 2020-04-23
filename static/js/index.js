@@ -258,3 +258,8 @@ function toggleUnfollowView(data){
 $('.follow-toggle__container').on('click', '.follow-user' ,function(){createFollow.call(this, toggleFollowView, error_cb, 'follow')});
 
 $('.follow-toggle__container').on('click','.unfollow-user', function(){createFollow.call(this, toggleUnfollowView, error_cb, 'unfollow')})
+
+/*
+navbar hover
+
+*/

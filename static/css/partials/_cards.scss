@@ -161,11 +161,13 @@
     }
   }
   .comments-portion {
-    position: absolute;
+    position: relative;
     bottom: 0;
     right: 0;
     width: 335px;
     padding: 0 24px;
+    border: 1px solid #dbdbdb;
+    border-top: dotted #dbdbdb;
     flex-direction: column;
   }
   @media screen and (max-width: 875px) {
@@ -179,9 +181,6 @@
       right: 0;
       padding: 18px 20px;
       border: none;
-    }
-    .comments-portion {
-
     }
   }
 }

@@ -1,3 +1,10 @@
+.greetingText{
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: medium;
+  font-style: initial;
+  margin: auto;
+}
+
 .unfollow-user, .follow-user, .generic-button {
   font-weight: bold;
   font-size: 15px;
@@ -296,19 +303,6 @@ a:hover {
       border-right: none;
       border-left: none; } }
 
-.comment-list {
-  list-style: none;
-  margin: 0;
-  padding: 0; }
-  .comment-list__comment {
-    margin-top: 5px;
-    margin-bottom: 5px; }
-    .comment-list__comment .user {
-      color: #333;
-      font-weight: bold; }
-      .comment-list__comment .user:hover {
-        color: #4d4d4d;
-        text-decoration: none; }
 
 .likes-timestamp-row {
   margin-top: 15px; }
@@ -355,9 +349,11 @@ a:hover {
   width: 100%;
   position: relative;
   background-color: rgb(220, 246, 250);; }
-  .single-post-card .header, .single-post-card .comments-portion {
+  .single-post-card .header {
+    border-bottom: 1px solid #dbdbdb;
     display: flex;
     flex-shrink: 0; }
+  
   .single-post-card .header {
     border-bottom: 1px solid #ccc;
     padding: 20px 0;
@@ -379,7 +375,54 @@ a:hover {
     right: 0;
     width: 335px;
     padding: 0 24px;
-    flex-direction: column; }
+    flex-direction: column;
+  }
+  .single-post-card .comments-portion .titleBox{
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: initial;
+    font-weight: bold;
+    margin: auto;
+    color: #8f8f8f;
+  }
+
+  .comments-portion .comment-list {
+    list-style: none;
+    margin: 0;
+    padding: 0; }
+
+  .comment-list li > div{
+    display: table-cell;
+  }
+    .comment-list__comment {
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+      
+      .comment-list__comment .commenterImage{
+        width: 30px;
+        margin-right: 5px;
+        height: 100%;
+        float: left;
+      }
+      .comment-list__comment > .commenterImage > img{
+        width: 100%;
+        border-radius: 50% 50% 50% 50%;
+      }
+      .comment-list__comment .commentText{
+        margin: 0px;
+      }
+      .comment-list__comment .user {
+        color: #333;
+        font-weight: bold; }
+        .comment-list__comment .user:hover {
+          color: #4d4d4d;
+          text-decoration: none; }
+      .comment-list__comment .comment-secondLine{
+          font-size: small;
+          color: #4d4d4d;
+      }
+
   @media screen and (max-width: 875px) {
     .single-post-card {
       padding-right: 0; }
@@ -413,7 +456,9 @@ a:hover {
     display: inline-block;
     color: #262626;
     font-size: 15px;
-    width: 100%; }
+    width: 100%; 
+    padding-bottom: 5px;
+  }
     .input-row .comment-input-wrapper input {
       width: 100%;
       border: none;

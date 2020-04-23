@@ -8,7 +8,7 @@
             <ul class="nav navbar-nav navbar-middle">
                 {% if request.user.is_authenticated %}
                     <li>
-                        <a href="{% url 'post' %}"><i class="fa fa-home"></i></a>
+                        <a class="hover-home" href="{% url 'post' %}"><i class="fa fa-home"></i></a>
                     </li>
                     <li>
                         <a href="{% url 'helloworld'%}"><i class="fa fa-search" aria-hidden="true"></i></a>
@@ -24,24 +24,27 @@
                     </li>
                 {% else %}
                     <li>
-                        <a href="{% url 'login'%}"><i class="fa fa-sign-in"></i></a>
+                        <a class="hover-signin" href="{% url 'login'%}"><i class="fa fa-sign-in"></i><span> SignIn </span></a>
+                        
                     </li>
                     <li>
-                        <a href="{% url 'signup' %}"><i class="fa fa-user-plus"></i></a>
+                        <a class="hover-signup" href="{% url 'signup' %}"><i class="fa fa-user-plus"></i><span> Register </span></a>
+                        
                     </li>
                 {% endif %}
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                {% if request.user.is_authenticated %}
-                    <div></div>
-                    <div style="font-family:sans-serif;font-size:16px;font-style;">
-                        Hi, {{ request.user.username }}!
-                    </div>
-                {% else %}
-                    <div style="font-family:sans-serif;font-size:16px;font-style;">
-                        Hi, be my guest! or login/register on the left!
-                    </div>
-                {% endif %}
+                <div>
+                    {% if request.user.is_authenticated %}
+                        <div class="greetingText">
+                            Hi, {{ request.user.username }}!
+                        </div>
+                    {% else %}
+                        <div style="greetingText">
+                            Hi, You can login/register on the left!
+                        </div>
+                    {% endif %}
+                </div>
             </ul>
         </div>
     </div>

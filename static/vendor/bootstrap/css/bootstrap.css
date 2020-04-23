@@ -4072,14 +4072,14 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   margin-bottom: 20px;
   border: 1px solid transparent;
 }
-@media (min-width: 768px) {
+@media (min-width: 300px) {
   .navbar {
     border-radius: 4px;
   }
 }
-@media (min-width: 768px) {
+@media (min-width: 300px) {
   .navbar-header {
-    float: left;
+    float: inline-start;
   }
 }
 .navbar-collapse {

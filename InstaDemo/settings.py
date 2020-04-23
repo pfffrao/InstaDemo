@@ -24,7 +24,7 @@ sys.path.append(BASE_DIR)
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*(%4%_8-_4%w3-=dqt793pc-chybq87yt8*mbf7t%@52sze()('
+SECRET_KEY = os.getenv('InstaDemoSecretKey')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
